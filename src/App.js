@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 export default function Board() {
+  const [xIsNext,setXIsNext]= useState(true);
   const [squares,setSquares]=useState(Array(9).fill(null));
   function handleClick(i){
     const nextSquares=squares.slice();
@@ -23,6 +24,9 @@ export default function Board() {
       <Square value={squares[6]} onSquareClick={()=>handleClick(6)}/>
       <Square value={squares[7]} onSquareClick={()=>handleClick(7)}/>
       <Square value={squares[8]} onSquareClick={()=>handleClick(8)}/>
+    </div>
+    <div>
+      <Square value={squares[]}/>
     </div>
   </>
   )
