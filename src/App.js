@@ -50,4 +50,21 @@ function Square({value,onSquareClick}){
    </button>
 }
 
+//胜者
+function calculateWinner(squares){
+   const lines=[
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+   ];
+   for (let i=0;i<lines.length;i++){
+    
+   }
+}
+
 // 定义了一个名为square的函数，JavaScript的export 关键字使此函数可以在文件之外访问。default 关键字表示它是文件中的主要函数
