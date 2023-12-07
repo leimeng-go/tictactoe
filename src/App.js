@@ -1,10 +1,11 @@
 import { useState } from "react"
 
-export default function Board() {
+function Board({xIsNext,squares,onPlay}) {
   const [xIsNext,setXIsNext]= useState(true);
   const [squares,setSquares]=useState(Array(9).fill(null));
   function handleClick(i){
-    if (squares[i]){
+    //如果当前的格子不为空或者已经决出胜负
+    if (squares[i] || calculateWinner(squares)){
       return;
     }
     const nextSquares=squares.slice();
@@ -18,8 +19,19 @@ export default function Board() {
     // 翻转内容
     setXIsNext(!xIsNext);
   }
+
+  //显示相关提示
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner){
+     status="Winner: "+winner;
+  }else{ 
+     status="Next player: "+(xIsNext?"x":"o");
+  }
+
   return (
     <>
+    <div className="status">{status}</div>
     <div className="board-row">
       <Square value={squares[0]} onSquareClick={()=>handleClick(0)}/>
       <Square value={squares[1]} onSquareClick={()=>handleClick(1)}/>
@@ -40,11 +52,19 @@ export default function Board() {
 
 }
 
+export default function Game(){
+  const [xIsNext,setXIsNext]= useState(true);
+  const [history,setHistory]= useState(Array(9).fill(null));
+  const currentSquares=history[history.length-1];
+
+  function handlePlay(nextSquares){
+     setHistory([...history,nextSquares]);
+     setXIsNext(!xIsNext)
+     
+  }
+}
+
 function Square({value,onSquareClick}){
-  // const [value,setValue]= useState(null);
-  //  function handleClick(){
-    //  setValue("X")
-  // }
    return <button className="square" onClick={onSquareClick}>
        {value}
    </button>
@@ -63,8 +83,12 @@ function calculateWinner(squares){
     [2, 4, 6]
    ];
    for (let i=0;i<lines.length;i++){
-    
+       const [a,b,c]=lines[i];
+       if (squares[a]&&squares[a]===squares[b]&& squares[a]===squares[c]){
+          return squares[a]
+       }
    }
+   return null;
 }
 
 // 定义了一个名为square的函数，JavaScript的export 关键字使此函数可以在文件之外访问。default 关键字表示它是文件中的主要函数
